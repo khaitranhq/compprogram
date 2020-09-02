@@ -1,18 +1,3 @@
-#!/bin/bash
-
-CONTEST_NAME="EC294"
-PROBLEMS=(A B C D E F G)
-
-rm -rf $CONTEST_NAME
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}"
-do
-
-mkdir $problemName
-cd $problemName
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -44,9 +29,6 @@ cat > data.cpp <<- "EOF"
 #define pb push_back
 using namespace std;
 
-typedef int64_t ll;
-typedef vector<int> vi;
-
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("data.inp", "r", stdin);
@@ -55,11 +37,3 @@ int main(){
 
     return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done
