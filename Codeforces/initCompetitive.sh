@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CONTEST_NAME="EC294"
-PROBLEMS=(A B C D E F G)
+CONTEST_NAME="CFR668"
+PROBLEMS=(A B C D E)
 
 rm -rf $CONTEST_NAME
 mkdir $CONTEST_NAME
@@ -46,6 +46,7 @@ using namespace std;
 
 typedef int64_t ll;
 typedef vector<int> vi;
+typedef pair<int, int> ii;
 
 int main(){
     #ifndef ONLINE_JUDGE
