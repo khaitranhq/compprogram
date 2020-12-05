@@ -32,6 +32,37 @@ using namespace std;
 typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> ii;
+typedef pair<int, ii> iii;
+
+const int MAXN = 305;
+const int MAXM = 2e5 + 5;
+int n;
+int W[MAXN];
+vector<iii> E;
+int res = 0;
+
+struct DisjointSet {
+  int par[MAXN];
+
+  DisjointSet() {
+    memset(par, -1, sizeof(par));
+  }
+
+  int root(int u){
+    return par[u] < 0 ? u : par[u] = root(par[u]);
+  }
+
+  void join(int u, int v, int w) {
+    u = root(u); v = root(v);
+    if (u == v) return;
+
+    res += w;
+
+    if (par[u] < par[v]) swap(u, v);
+    par[u] += par[v];
+    par[v] = u;
+  }
+} DSU;
 
 int main(){
     #ifndef ONLINE_JUDGE
@@ -39,5 +70,27 @@ int main(){
     freopen("data.out", "w", stdout);
     #endif
 
+    scanf("%d", &n);
+    for (int i = 1; i <= n; ++i) {
+      scanf("%d", &W[i]);
+      E.push_back(iii(W[i], ii(0, i)));
+    }
+
+    for (int i = 1; i <= n; ++i)
+      for (int j = 1; j <= n; ++j) {
+        int x;
+        scanf("%d", &x);
+
+        if (i > j) {
+            E.push_back(iii(x, ii(i, j)));
+        }
+      }
+
+    sort(E.begin(), E.end());
+
+    for (int i = 0; i < E.size(); ++i)
+      DSU.join(E[i].se.fi, E[i].se.se, E[i].fi);
+
+    cout << res;
     return 0;
 }
