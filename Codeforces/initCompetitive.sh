@@ -1,8 +1,9 @@
 #!/bin/bash
 
 # cd ./Codeforces
-CONTEST_NAME="ECR97"
-PROBLEMS=(A B C D E F G H I J K)
+CONTEST_NAME="ICPC_Brazil_Subregional"
+PROBLEMS=(A B C D E F G H I J K L M N O)
+# PROBLEMS=(A B C D E)
 
 rm -rf $CONTEST_NAME
 mkdir $CONTEST_NAME
