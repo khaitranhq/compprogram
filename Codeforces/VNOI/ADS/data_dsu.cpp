@@ -1,20 +1,3 @@
-#!/bin/bash
-
-# cd ./Codeforces
-CONTEST_NAME="CGR12"
-PROBLEMS=(A B C D E F G H I J K L M N O)
-# PROBLEMS=(A B C D E)
-
-rm -rf $CONTEST_NAME
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}" #(1)
-do #(1)
-
-mkdir $problemName #(1)
-cd $problemName #(1)
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -50,19 +33,52 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> ii;
 
+const int MAXN = 2e3 + 5;
+int n, m;
+vector<ii> E;
+int res = 0;
+
+struct DisjointSet {
+  int par[MAXN];
+
+  DisjointSet() {
+    memset(par, -1, sizeof(par));
+  }
+
+  int root(int u) {
+    return par[u] < 0 ? u : par[u] = root(par[u]);
+  }
+
+  void join(int u, int v) {
+    u = root(u); v = root(v);
+    if (u == v) return;
+    
+    --res;
+    if (par[u] < par[v]) swap(u, v);
+    par[u] += par[v];
+    par[v] = u;
+  }
+} DSU;
+
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("data.inp", "r", stdin);
     freopen("data.out", "w", stdout);
     #endif
 
+    cin >> n >> m;
+    for (int i = 0; i < m; ++i) {
+      int u, v;
+      cin >> u >> v;
+      --u; --v;
+      E.push_back(ii(u, v));
+    }
+
+    res = m;
+    for (auto edge: E) {
+      DSU.join(edge.fi, edge.se);
+    }
+
+    cout << res;
     return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done #(1)

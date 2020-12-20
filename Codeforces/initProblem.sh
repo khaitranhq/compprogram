@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROBLEM_NAME="./VNOI/FWATER"
+PROBLEM_NAME="./VNOI/ADS"
 
 rm -rf $PROBLEM_NAME
 mkdir $PROBLEM_NAME

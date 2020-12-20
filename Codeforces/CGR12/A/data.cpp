@@ -1,20 +1,3 @@
-#!/bin/bash
-
-# cd ./Codeforces
-CONTEST_NAME="CGR12"
-PROBLEMS=(A B C D E F G H I J K L M N O)
-# PROBLEMS=(A B C D E)
-
-rm -rf $CONTEST_NAME
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}" #(1)
-do #(1)
-
-mkdir $problemName #(1)
-cd $problemName #(1)
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -50,19 +33,31 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> ii;
 
+int num[26];
+
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("data.inp", "r", stdin);
     freopen("data.out", "w", stdout);
     #endif
 
+    int T;
+    cin >> T;
+    while(T--) {:w
+      string s;
+      cin >> s;
+      for (int i = 0; i < s.size(); ++i)
+        ++num[s[i] - 'a'];
+
+      string test = "bugyrt";
+      for (int i = 0; i < test.size(); ++i)
+        for (int j = 0; j < num[test[i] - 'a']; ++j) cout << test[i];
+
+      for (char i = 'a'; i <= 'z'; ++i) {
+        bool flag = 1;
+        for (int j = 0; j < test.size(); ++j)  
+          if (i == )
+        
+    }
     return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done #(1)

@@ -1,20 +1,3 @@
-#!/bin/bash
-
-# cd ./Codeforces
-CONTEST_NAME="CGR12"
-PROBLEMS=(A B C D E F G H I J K L M N O)
-# PROBLEMS=(A B C D E)
-
-rm -rf $CONTEST_NAME
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}" #(1)
-do #(1)
-
-mkdir $problemName #(1)
-cd $problemName #(1)
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -50,19 +33,46 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> ii;
 
+const int MAXN = 2e3 + 5;
+int n, m;
+vector<int> adj[MAXN];
+bool isVisited[MAXN];
+
+void bfs(int startVer) {
+  queue<int> q;
+  q.push(startVer);
+  while(q.size()) {
+    int u = q.front(); q.pop();
+    isVisited[u] = 1;
+
+    for(auto v : adj[u])
+      if (!isVisited[v]) 
+        q.push(v);
+  }
+}
+
 int main(){
     #ifndef ONLINE_JUDGE
     freopen("data.inp", "r", stdin);
     freopen("data.out", "w", stdout);
     #endif
 
+    cin >> n >> m;
+    for (int i = 0; i < m; ++i) {
+      int u, v;
+      cin >> u >> v;
+      --u; --v;
+      adj[u].push_back(v);
+      adj[v].push_back(u);
+    }
+
+    int numberConnectedComponent = 0;
+    for (int i = 0; i < n; ++i)
+      if (!isVisited[i]) {
+        ++numberConnectedComponent;
+        bfs(i);
+      }
+
+    cout << m - n + numberConnectedComponent;
     return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done #(1)
