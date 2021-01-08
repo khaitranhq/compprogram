@@ -1,16 +1,3 @@
-#!/bin/bash
-
-PROBLEM_NAME="./VNOI/CHESSCBG"
-
-if [ -d "$PROBLEM_NAME" ]; then
-  echo "Direction existed"
-  exit 1
-fi
-
-mkdir $PROBLEM_NAME
-
-cd $PROBLEM_NAME
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -46,17 +33,48 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> ii;
 
-int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("data.inp", "r", stdin);
-    freopen("data.out", "w", stdout);
-    #endif
+const int MAXN = 4;
+const int dx[4] = {-1, 0, 1, 0};
+const int dy[4] = {0, -1, 0, 1};
+bool a[2][MAXN][MAXN];
+int d[MAXN][MAXN][MAXN][MAXN]; //Min distance from chessman to all other cell
 
-    return 0;
+void BFS(ii s){
+  queue<ii> q;
+  q.push(s);
+  while(q.size()) {
+    ii u = q.front(); q.pop();
+
+    for (int i = 0; i < MAXN; ++i) {
+      ii v = ii(u.fi + dx[i], u.se + dy[i]);
+
+      if (v.fi < 0 || v.fi >= MAXN) continue;
+      if (v.se < 0 || v.se >= MAXN) continue;
+      if (!a[0][v.fi][v.se])
+        q.push(v);
+    }
+  }
 }
-EOF
 
-touch data.inp
-touch data.out
+int main()
+{
+#ifndef ONLINE_JUDGE
+  freopen("data.inp", "r", stdin);
+  freopen("data.out", "w", stdout);
+#endif
 
-echo "Create problem successfully"
+  for (int i = 0; i < 2; ++i)
+    for (int j = 0; j < MAXN; ++j)
+    {
+      string s;
+      cin >> s;
+      for (int k = 0; k < s.size(); ++i)
+        a[i][j][k] = s[k] - '0';
+    }
+
+  for (int i = 0; i < MAXN; ++i)
+    for (int j = 0; j < MAXN; ++j)
+      if (a[0][i][j] && !a[1][i][j])
+        BFS(ii(i, j));
+  return 0;
+}

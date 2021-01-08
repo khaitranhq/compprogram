@@ -1,16 +1,3 @@
-#!/bin/bash
-
-PROBLEM_NAME="./VNOI/CHESSCBG"
-
-if [ -d "$PROBLEM_NAME" ]; then
-  echo "Direction existed"
-  exit 1
-fi
-
-mkdir $PROBLEM_NAME
-
-cd $PROBLEM_NAME
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -54,9 +41,3 @@ int main(){
 
     return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-echo "Create problem successfully"

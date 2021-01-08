@@ -1,11 +1,15 @@
 #!/bin/bash
 
 # cd ./Codeforces
-CONTEST_NAME="CGR12"
+CONTEST_NAME="ICPC_Training_03"
 PROBLEMS=(A B C D E F G H I J K L M N O)
 # PROBLEMS=(A B C D E)
 
-rm -rf $CONTEST_NAME
+if [ -d "$CONTEST_NAME" ]; then
+  echo "Direction existed"
+  exit 1
+fi
+
 mkdir $CONTEST_NAME
 
 cd $CONTEST_NAME
@@ -66,3 +70,5 @@ touch data.out
 cd ..
 
 done #(1)
+
+echo "Create contest successfully"
