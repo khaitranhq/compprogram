@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROBLEM_NAME="./VNOI/CHESSCBG"
+PROBLEM_NAME="./ECR46/C"
 
 if [ -d "$PROBLEM_NAME" ]; then
   echo "Direction existed"
