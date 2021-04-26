@@ -1,28 +1,25 @@
 #include <bits/stdc++.h>
 
-#define FOR(i, a, b) for (int i = a; i <= b; ++i)
-#define FOD(i, a, b) for (int i = a; i >= b; --i)
-#define REP(i, a, b) for (int i = a; i < b; ++i)
-#define FRSZ(i, a) for (int i = 0; i < a.size(); ++i)
-#define FDSZ(i, a) for (int i = a.size() – 1; i >= 0; --i)
-
 #define debug(x) cout << #x << " = " << x << endl;
 #define debugarr2d(x, n, m)                                                    \
   {                                                                            \
-    FOR(_, 1, (n)) {                                                           \
-      FOR(__, 1, (m)) cout << x[_][__] << " ";                                 \
+    for (int _ = 0; _ < n; ++_) {                                              \
+      for (int __ = 0; __ < m; ++__)                                           \
+        cout << x[_][__] << " ";                                               \
       cout << endl;                                                            \
     }                                                                          \
     cout << endl;                                                              \
   }
 #define debugarr(x, n)                                                         \
   {                                                                            \
-    FOR(_, 1, (n)) cout << x[_] << " ";                                        \
+    for (int _ = 0; _ < n; ++_)                                                \
+      cout << x[_] << " ";                                                     \
     cout << endl;                                                              \
   }
 #define debugvi(x)                                                             \
   {                                                                            \
-    FRSZ(_, x) cout << x[_] << " ";                                            \
+    for (int _ = 0; _ < x.size(); ++_)                                         \
+      cout << x[_] << " ";                                                     \
     cout << endl;                                                              \
   }
 
@@ -32,8 +29,10 @@
 using namespace std;
 
 typedef int64_t ll;
-const int MAX = 1e5 + 5;
-int n;
+typedef vector<int> vi;
+typedef pair<int, int> ii;
+
+int a[3];
 
 int main() {
 #ifndef ONLINE_JUDGE
@@ -41,11 +40,21 @@ int main() {
   freopen("data.out", "w", stdout);
 #endif
 
-  int T;
-  cin >> T;
-  while (T--) {
-    cin >> n;
-    cout << n;
-  }
+  cin >> a[0] >> a[1] >> a[2];
+
+  int ans = 0;
+  for (int i = 0; i < 3; ++i)
+    if (a[i] > 3) {
+      ans += a[i] / 3;
+      a[i] %= 3;
+    }
+
+  if (!a[1] || !a[2] || !a[0]) {
+    ans += a[0] / 3 + a[1] / 3 + a[2] / 3;
+  } else
+    ans += min(a[0], min(a[1], a[2]));
+
+  cout << ans;
+
   return 0;
 }

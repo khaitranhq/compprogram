@@ -1,28 +1,25 @@
 #include <bits/stdc++.h>
 
-#define FOR(i, a, b) for (int i = a; i <= b; ++i)
-#define FOD(i, a, b) for (int i = a; i >= b; --i)
-#define REP(i, a, b) for (int i = a; i < b; ++i)
-#define FRSZ(i, a) for (int i = 0; i < a.size(); ++i)
-#define FDSZ(i, a) for (int i = a.size() – 1; i >= 0; --i)
-
 #define debug(x) cout << #x << " = " << x << endl;
 #define debugarr2d(x, n, m)                                                    \
   {                                                                            \
-    FOR(_, 1, (n)) {                                                           \
-      FOR(__, 1, (m)) cout << x[_][__] << " ";                                 \
+    for (int _ = 0; _ < n; ++_) {                                              \
+      for (int __ = 0; __ < m; ++__)                                           \
+        cout << x[_][__] << " ";                                               \
       cout << endl;                                                            \
     }                                                                          \
     cout << endl;                                                              \
   }
 #define debugarr(x, n)                                                         \
   {                                                                            \
-    FOR(_, 1, (n)) cout << x[_] << " ";                                        \
+    for (int _ = 0; _ < n; ++_)                                                \
+      cout << x[_] << " ";                                                     \
     cout << endl;                                                              \
   }
 #define debugvi(x)                                                             \
   {                                                                            \
-    FRSZ(_, x) cout << x[_] << " ";                                            \
+    for (int _ = 0; _ < x.size(); ++_)                                         \
+      cout << x[_] << " ";                                                     \
     cout << endl;                                                              \
   }
 
@@ -32,8 +29,12 @@
 using namespace std;
 
 typedef int64_t ll;
-const int MAX = 1e5 + 5;
-int n;
+typedef vector<int> vi;
+typedef pair<int, int> ii;
+
+const int MAX = 1e4 + 5;
+int n, k;
+int a[MAX];
 
 int main() {
 #ifndef ONLINE_JUDGE
@@ -44,8 +45,19 @@ int main() {
   int T;
   cin >> T;
   while (T--) {
-    cin >> n;
-    cout << n;
+    cin >> n >> k;
+
+    for (int i = 0; i < n; ++i)
+      cin >> a[i];
+    sort(a, a + n, greater<int>());
+
+    int cnt = 0;
+    for (int i = 0;i < n && k > 0; ++i) {
+      ++cnt;
+      k -= a[i];
+    }
+    if (k > 0 ) cout << -1 << endl;
+    else cout << cnt << endl;
   }
   return 0;
 }
