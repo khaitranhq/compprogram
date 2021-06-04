@@ -46,7 +46,7 @@ typedef vector<int> vi;
 typedef pair<int, int> ii;
 
 int main() {
-#ifndef ONLINE_JUDGE
+#ifdef LOCAL
   freopen("data.inp", "r", stdin);
   freopen("data.out", "w", stdout);
 #endif
