@@ -1,16 +1,3 @@
-#!/bin/bash
-
-PROBLEM_NAME="CFR479/F"
-
-if [ -d "$PROBLEM_NAME" ]; then
-  echo "Direction existed"
-  exit 1
-fi
-
-mkdir -p $PROBLEM_NAME
-
-cd $PROBLEM_NAME
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -45,17 +32,17 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> pii;
 
+const int MAX = 2e5 + 5;
+int n;
+
 int main() {
 #ifdef LOCAL
   freopen("data.inp", "r", stdin);
   freopen("data.out", "w", stdout);
 #endif
 
+  cin >> n;
+  for (int i = 0; i < n; ++i) {
+  }
   return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-echo "Create problem successfully"

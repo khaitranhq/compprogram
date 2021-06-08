@@ -51,7 +51,7 @@ using namespace std;
 
 typedef int64_t ll;
 typedef vector<int> vi;
-typedef pair<int, int> ii;
+typedef pair<int, int> pii;
 
 int main() {
 #ifdef LOCAL
