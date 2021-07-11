@@ -62,14 +62,14 @@ void enter() {
  * vertical
  */
 void calc(int i, int j, bool direction) {
-  // cout << "Start a components..." << endl;
+//   cout << "Start a components..." << endl;
   // debug(i);
   // debug(j);
   // debug(direction);
 
   int rt = 0;
   if (!direction)
-    for (int k = i; k <= n; ++k) {
+    for (int k = i; k < n; ++k) {
       if (a[k][j] < 2)
         break;
 
@@ -80,17 +80,17 @@ void calc(int i, int j, bool direction) {
         ans += rt;
     }
   else
-    for (int k = j; k <= m; ++k) {
+    for (int k = j; k < m; ++k) {
       if (a[i][k] > 1)
         break;
 
       // debug(k);
       isVisited[i][k] = 1;
-      rt += (a[i][k] == 0);
-      if (a[i][k] == 1)
+      rt += (a[i][k] == 1);
+      if (a[i][k] == 0)
         ans += rt;
     }
-  // debug(ans);
+//   debug(ans);
   // cout << endl;
 }
 
