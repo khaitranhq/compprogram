@@ -1,24 +1,3 @@
-#!/bin/bash
-
-# cd ./Codeforces
-CONTEST_NAME="DUT_Training_05"
-PROBLEMS=(A B C D E F G H I J K L M N O)
-# PROBLEMS=(A B C D E)
-
-if [ -d "$CONTEST_NAME" ]; then
-  echo "Direction existed"
-  exit 1
-fi
-
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}" #(1)
-do #(1)
-
-mkdir $problemName #(1)
-cd $problemName #(1)
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -59,15 +38,47 @@ int main() {
   freopen("data.out", "w", stdout);
 #endif
 
+  int T;
+  cin >> T;
+  while(T--) {
+    string s;
+    cin >> s;
+
+    int l = -1, r = -1;
+    
+    for (size_t i = 0 ;i < s.size(); ++i)
+      if (s[i] == 'a') {
+        l = i;
+        r = i;
+        break;
+      }
+
+    if (l == -1 && r == -1) {
+      cout << "NO" << endl;
+      continue;
+    }
+
+    char currentChar ='a';
+    bool flag = 1;
+    while(l != 0 || r != s.size() -1) {
+      // debug(l);debug(r);
+      if (l > 0 && s[l - 1] == currentChar + 1) {
+        --l;
+      }
+      else 
+        if (r < s.size() -1 && s[r + 1] == currentChar + 1) {
+          ++r;
+        }
+        else {
+          flag = 0;
+          break;
+        }
+      ++currentChar;
+    }
+
+    if (flag && r - l + 1 == s.size()) cout << "YES" << endl;
+    else cout << "NO" << endl;
+  }
+
   return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done #(1)
-
-echo "Create contest successfully"

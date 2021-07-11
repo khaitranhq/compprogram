@@ -1,24 +1,3 @@
-#!/bin/bash
-
-# cd ./Codeforces
-CONTEST_NAME="DUT_Training_05"
-PROBLEMS=(A B C D E F G H I J K L M N O)
-# PROBLEMS=(A B C D E)
-
-if [ -d "$CONTEST_NAME" ]; then
-  echo "Direction existed"
-  exit 1
-fi
-
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}" #(1)
-do #(1)
-
-mkdir $problemName #(1)
-cd $problemName #(1)
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -53,21 +32,34 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> pii;
 
+int pos[4];
+const char ch[4] = {'e', 'z', 'p', 'c'};
+
 int main() {
 #ifdef LOCAL
   freopen("data.inp", "r", stdin);
   freopen("data.out", "w", stdout);
 #endif
 
+  int T;
+  cin >> T;
+  while (T--) {
+    string s;
+    cin >> s;
+
+    for (int i = 0; i < 4; ++i) {
+      for (size_t j = 0; j < s.size(); ++j)
+        if (s[j] == ch[i]) {
+          pos[i] = j;
+          break;
+        }
+    }
+
+    if (pos[1] < pos[2] && pos[2] < pos[3] && pos[0] < pos[3])
+      cout << "YES" << endl;
+    else
+      cout << "NO" << endl;
+  }
+
   return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done #(1)
-
-echo "Create contest successfully"

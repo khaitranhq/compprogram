@@ -1,24 +1,3 @@
-#!/bin/bash
-
-# cd ./Codeforces
-CONTEST_NAME="DUT_Training_05"
-PROBLEMS=(A B C D E F G H I J K L M N O)
-# PROBLEMS=(A B C D E)
-
-if [ -d "$CONTEST_NAME" ]; then
-  echo "Direction existed"
-  exit 1
-fi
-
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}" #(1)
-do #(1)
-
-mkdir $problemName #(1)
-cd $problemName #(1)
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -53,21 +32,69 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> pii;
 
+const int MAX = 305;
+int k, n, m;
+int a[MAX], b[MAX];
+
 int main() {
 #ifdef LOCAL
   freopen("data.inp", "r", stdin);
   freopen("data.out", "w", stdout);
 #endif
 
+  int T;
+  cin >> T;
+  while (T--) {
+    cin >> k >> n >> m;
+
+    for (int i = 1; i <= n; ++i) {
+      cin >> a[i];
+    }
+
+    for (int i = 1; i <= m; ++i) {
+      cin >> b[i];
+    }
+
+    int up = 1, down = 1;
+    bool flag = 1;
+    vector<int> ans;
+    while (up <= n || down <= m) {
+//       debug(up);
+      // debug(down);
+      // debug(k);
+      if (up <= n && !a[up]) {
+        ans.push_back(a[up]);
+        ++k;
+        ++up;
+      } else if (down <= m && !b[down]) {
+        ans.push_back(b[down]);
+        ++k;
+        ++down;
+      } else if (up <= n && down <= m && a[up] < b[down] && a[up] <= k) {
+        ans.push_back(a[up]);
+        ++up;
+      } else if (down > m && a[up] <= k) {
+        ans.push_back(a[up]);
+        ++up;
+      } else if (up <= n && down <= m && a[up] >= b[down] && b[down] <= k) {
+        ans.push_back(b[down]);
+        ++down;
+      } else if (up > n && b[down] <= k) {
+        ans.push_back(b[down]);
+        ++down;
+      } else {
+        flag = 0;
+        break;
+      }
+    }
+
+    if (!flag)
+      cout << -1;
+    else
+      for (auto x : ans)
+        cout << x << " ";
+
+    cout << endl;
+  }
   return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done #(1)
-
-echo "Create contest successfully"
