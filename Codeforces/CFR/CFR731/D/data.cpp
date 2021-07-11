@@ -35,97 +35,7 @@ typedef pair<int, int> pii;
 
 const int MAX = 2e5 + 5;
 int n;
-int value[MAX];
-vb a[MAX];
-int lastOneIndex[MAX];
-
-struct FenwickTree {
-  int Tree[MAX];
-  int n;
-
-  FenwickTree(int n) {
-    for (int i = 0; i <= n; ++i) Tree[i] = 0;
-    this -> n = n;
-  }
-
-  void update(int u, int value) {
-    for (; u <= n; u += u & -u)
-      Tree[u] += value;
-    // debugarr(Tree, n)
-  }
-
-  int query(int u) {
-    int ans = 0;
-    for (; u; u -= u & -u)
-      ans += Tree[u];
-    return ans;
-  }
-
-  void update(int u, int v, int value) {
-    update(u, value);
-    update(v + 1, -value);
-  }
-};
-
-vb convertDec2Bin(int x, int len) {
-  vb ans;
-  do {
-    ans.push_back(x % 2);
-    x /= 2;
-  } while (x);
-  while (ans.size() < len)
-    ans.push_back(0);
-
-  // for (auto tmp: ans) cout << tmp << " ";
-
-  return ans;
-}
-
-void solve() {
-  int n;
-  cin >> n;
-
-  int maxValueIndex = 0;
-  for (int i = 1; i <= n; ++i) {
-    cin >> value[i];
-    if (!maxValueIndex || value[i] > value[maxValueIndex])
-      maxValueIndex = i;
-  }
-
-  for (int i = 1; i <= n; ++i) {
-    a[i] = convertDec2Bin(value[i], log2(value[maxValueIndex]) + 1);
-    lastOneIndex[i] = log2(value[i]) + 1;
-  }
-
-  FenwickTree BIT = FenwickTree(n);
-  for (int i = maxValueIndex - 1; i; --i) {
-    for (int j = 0; j < lastOneIndex[i]; ++j) {
-      if (!a[i][j] && a[maxValueIndex][j]) {
-        BIT.update(i, i, (1 << j));
-      }
-
-      if (a[i][j] && !a[maxValueIndex][j]) {
-        BIT.update(i + 1, maxValueIndex, (1 << j));
-        a[maxValueIndex][j] = 1;
-      }
-    }
-    debug(i);
-    debugarr(BIT.Tree, n);
-    cout << endl;
-  }
-
-  for (int i = maxValueIndex + 1; i <= n; ++i) {
-    for (int j = 0; j < a[i].size(); ++j) {
-      if (a[i][j] != a[maxValueIndex][j])
-        BIT.update(i, i, (1 << j));
-    }
-  }
-
-  for (int i = 1; i <= n; ++i)
-    cout << BIT.query(i) << " ";
-
-  cout << endl;
-}
+int a[MAX], b[MAX];
 
 int main() {
 #ifdef LOCAL
@@ -136,7 +46,18 @@ int main() {
   int T;
   cin >> T;
   while (T--) {
-    solve();
+    cin >> n;
+    for (int i = 1; i <= n; ++i)
+      cin >> a[i];
+
+    int t = a[1] ^ 0;
+    cout << 0 << " ";
+    for (int i = 2; i <= n; ++i) {
+      int y = (t & (~a[i]));
+      cout << y << " ";
+      t = a[i] ^ y;
+    }
+    cout << endl;
   }
   return 0;
 }
