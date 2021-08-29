@@ -1,9 +1,7 @@
 #!/bin/bash
 
-# cd ./Codeforces
 CONTEST_NAME="DUTPC_2021_Round_2"
 PROBLEMS=(A B C D E F G H I J K L M N O)
-# PROBLEMS=(A B C D E)
 
 if [ -d "$CONTEST_NAME" ]; then
   echo "Direction existed"
