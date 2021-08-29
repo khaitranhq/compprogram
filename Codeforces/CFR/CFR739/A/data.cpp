@@ -1,24 +1,3 @@
-#!/bin/bash
-
-# cd ./Codeforces
-CONTEST_NAME="CFR/CFR739"
-PROBLEMS=(A B C D E F G)
-# PROBLEMS=(A B C D E)
-
-if [ -d "$CONTEST_NAME" ]; then
-  echo "Direction existed"
-  exit 1
-fi
-
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}" #(1)
-do #(1)
-
-mkdir $problemName #(1)
-cd $problemName #(1)
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
@@ -53,21 +32,28 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> pii;
 
+const int MAX = 1000000;
+vector<int> ans;
+
 int main() {
 #ifdef LOCAL
   freopen("data.inp", "r", stdin);
   freopen("data.out", "w", stdout);
 #endif
 
+  for (int i = 1; i <= MAX; ++i) {
+    if (i % 3 == 0 || i % 10 == 3)
+      continue;
+    ans.push_back(i);
+  }
+
+  int T;
+  cin >> T;
+  while (T--) {
+    int k;
+    cin >> k;
+    cout << ans[k - 1] << endl;
+  }
+
   return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done #(1)
-
-echo "Create contest successfully"

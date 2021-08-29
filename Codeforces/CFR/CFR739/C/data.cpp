@@ -1,27 +1,6 @@
-#!/bin/bash
-
-# cd ./Codeforces
-CONTEST_NAME="CFR/CFR739"
-PROBLEMS=(A B C D E F G)
-# PROBLEMS=(A B C D E)
-
-if [ -d "$CONTEST_NAME" ]; then
-  echo "Direction existed"
-  exit 1
-fi
-
-mkdir $CONTEST_NAME
-
-cd $CONTEST_NAME
-for problemName in "${PROBLEMS[@]}" #(1)
-do #(1)
-
-mkdir $problemName #(1)
-cd $problemName #(1)
-cat > data.cpp <<- "EOF"
 #include <bits/stdc++.h>
 
-#define debug(x) cout << #x << " = " << x << endl;
+#define debug(x) cout << #x << " = " << x << endl
 #define debugarr2d(x, n, m)                                                    \
   {                                                                            \
     for (int _ = 0; _ < n; ++_) {                                              \
@@ -53,21 +32,38 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> pii;
 
+pii findPosition(int layerNumber, int remain) {
+  if (remain == 0)
+    return {layerNumber - 1, 1};
+
+  int numbersInLayer = 2 * layerNumber - 1;
+//   debug(numbersInLayer);
+//   debug(remain);
+  if (2 * remain < numbersInLayer)
+    return {remain, layerNumber};
+
+  // debug("Case 3");
+  return {layerNumber, numbersInLayer - remain + 1};
+}
+
 int main() {
 #ifdef LOCAL
   freopen("data.inp", "r", stdin);
   freopen("data.out", "w", stdout);
 #endif
 
+  int T;
+  cin >> T;
+  while (T--) {
+    int k;
+    cin >> k;
+
+    int layerNumber = sqrt(k);
+    // debug(layerNumber);
+
+    pii ans = findPosition(layerNumber + 1, k - layerNumber * layerNumber);
+    cout << ans.first << " " << ans.second << endl;
+  }
+
   return 0;
 }
-EOF
-
-touch data.inp
-touch data.out
-
-cd ..
-
-done #(1)
-
-echo "Create contest successfully"
