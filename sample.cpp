@@ -26,7 +26,6 @@ using namespace std;
 int main() {
 #ifdef LOCAL
   freopen("data.inp", "r", stdin);
-  freopen("data.out", "w", stdout);
 #endif
 
   return 0;

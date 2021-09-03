@@ -23,20 +23,26 @@
     cout << endl;                                                              \
   }
 
-#define fi first
-#define se second
-#define pb push_back
 using namespace std;
 
-typedef int64_t ll;
-typedef vector<int> vi;
-typedef pair<int, int> pii;
+typedef vector<char> vc;
+
+vc findOrder(string t) {
+}
+
+void solve(string t) {}
 
 int main() {
 #ifdef LOCAL
   freopen("data.inp", "r", stdin);
-  freopen("data.out", "w", stdout);
 #endif
 
+  int T;
+  cin >> T;
+  while (T--) {
+    string t;
+    cin >> t;
+    solve(t);
+  }
   return 0;
 }
