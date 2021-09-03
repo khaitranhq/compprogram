@@ -20,7 +20,6 @@ do
   mv sample.cpp data.cpp
 
   touch data.inp
-  touch data.out
 
   cd ..
 done 

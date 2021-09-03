@@ -14,6 +14,5 @@ wget https://raw.githubusercontent.com/lioaslan/Competitive-Training/master/samp
 mv sample.cpp data.cpp
 
 touch data.inp
-touch data.out
 
 echo "Create problem successfully"
