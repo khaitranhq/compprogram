@@ -27,5 +27,16 @@ int main() {
   freopen("data.inp", "r", stdin);
 #endif
 
+  int T;
+  cin >> T;
+  while(T--) {
+    int l, r;
+    cin >> l >> r;
+
+    int mid = r / 2 + 1;
+
+    if (mid < l) cout << r % l << endl;
+    else cout << r % mid << endl;
+  }
   return 0;
 }
