@@ -1,7 +1,7 @@
 #!/bin/bash
 
-CONTEST_NAME="CFR/CFR740"
-PROBLEMS=(A B C D E F G)
+CONTEST_NAME="CFR/CFR741"
+PROBLEMS=(A B C D1 D2)
 
 if [ -d "$CONTEST_NAME" ]; then
   echo "Direction existed"
