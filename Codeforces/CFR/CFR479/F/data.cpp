@@ -1,9 +1,4 @@
-#include <algorithm>
-#include <cstdint>
-#include <cstdio>
-#include <iostream>
-#include <vector>
-#include <functional>
+#include <bits/stdc++.h>
 
 #define debug(x) cout << #x << " = " << x << endl;
 #define debugarr2d(x, n, m)                                                    \
@@ -37,76 +32,52 @@ typedef int64_t ll;
 typedef vector<int> vi;
 typedef pair<int, int> pii;
 
+const int MAX = 2e5 + 5;
 int n;
-vector<pii> a;
+int a[MAX];
 
 void enter() {
   cin >> n;
   for (int i = 1; i <= n; ++i) {
-    int x;
-    cin >> x;
-    a.push_back({x, i});
+    cin >> a[i];
   }
-}
-
-void findLongestConsecutiveIncreasingSubsequence(
-    vector<int> arr, vector<int> &maximumSubsequence) {
-  vector<int> cur;
-
-  function<void(void)> maximizeAnswer = [&] {
-    if (maximumSubsequence.size() < cur.size())
-      maximumSubsequence = cur;
-  };
-
-  for (size_t i = 0; i < arr.size(); ++i) {
-    if (!cur.size() || arr[i] > cur.back())
-      cur.push_back(arr[i]);
-    else {
-      maximizeAnswer();
-      cur.clear();
-      cur.push_back(arr[i]);
-    }
-  }
-  maximizeAnswer();
 }
 
 void solve() {
-  function<bool(pii, pii)> cmp = [=](pii x, pii y) {
-    if (x.first != y.first) return x.first < y.first;
-    return x.second > y.second;
-  };
+  map<int, int> dp;
+  for (int i = 1; i <= n; ++i) {
+    if (!dp.count(a[i]))
+      dp[a[i]] = 0;
 
-  sort(a.begin(), a.end(), cmp);
+    if (dp.count(a[i] - 1))
+      dp[a[i]] = max(dp[a[i]], dp[a[i] - 1] + 1);
+  }
 
-  //   for (size_t i = 0; i < a.size(); ++i)
-  //   cout << a[i].first << " " << a[i].second << endl;
-  // cout << endl;
+  int lastValueIndex = 0;
+  for (int i = 1; i <= n; ++i)
+    if (!lastValueIndex || dp[a[lastValueIndex]] < dp[a[i]])
+      lastValueIndex = i;
 
-  vector<int> index_of_increase_values, res;
-  index_of_increase_values.push_back(a[0].second);
-  for (size_t i = 1; i < a.size(); ++i) {
+  cout << dp[a[lastValueIndex]] + 1 << endl;
 
-    if (a[i].first - a[i - 1].first != 1) {
-      findLongestConsecutiveIncreasingSubsequence(index_of_increase_values,
-                                                  res);
-      index_of_increase_values.clear();
+  vector<int> subsequenceIndex;
+  subsequenceIndex.push_back(lastValueIndex);
+  for (int i = n; i >= 1; --i)
+    if (a[i] == a[lastValueIndex] - 1 && i < lastValueIndex) {
+      subsequenceIndex.push_back(i);
+      lastValueIndex = i;
     }
 
-    index_of_increase_values.push_back(a[i].second);
-  }
-  findLongestConsecutiveIncreasingSubsequence(index_of_increase_values, res);
-
-  cout << res.size() << endl;
-  for (size_t i = 0; i < res.size(); ++i)
-    cout << res[i] << " ";
+  reverse(subsequenceIndex.begin(), subsequenceIndex.end());
+  for (int i = 0; i < subsequenceIndex.size(); ++i)
+    cout << subsequenceIndex[i] << " ";
 }
 
 int main() {
-// #ifdef LOCAL
+#ifdef LOCAL
   freopen("data.inp", "r", stdin);
-  freopen("data.out", "w", stdout);
-// #endif
-  
+#endif
+
   enter();
   solve();
   return 0;

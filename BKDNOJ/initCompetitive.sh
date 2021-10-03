@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CONTEST_NAME="DUT_Training_05_09_2021"
+CONTEST_NAME="DUT_Training_26_09_2021"
 PROBLEMS=(A B C D E F G H I J K L M N O)
 
 if [ -d "$CONTEST_NAME" ]; then
