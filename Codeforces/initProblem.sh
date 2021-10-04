@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROBLEM_NAME="CFR479/F"
+PROBLEM_NAME="CFR/CFR537/C"
 
 if [ -d "$PROBLEM_NAME" ]; then
   echo "Direction existed"
