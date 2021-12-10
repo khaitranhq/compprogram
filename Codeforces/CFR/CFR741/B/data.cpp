@@ -26,6 +26,8 @@ int main() {
 #ifdef LOCAL
   freopen("data.inp", "r", stdin);
 #endif
+  auto x = [](int x) -> void {cout << x;};
 
+  x(50);
   return 0;
 }

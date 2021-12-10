@@ -1,31 +1,28 @@
 #include <bits/stdc++.h>
 
-#define debug(x) cout << #x << " = " << x << endl;
+#define debug(x) cerr << #x << " = " << x << endl;
 #define debugarr(x, n)                                                         \
   {                                                                            \
-    for (int _ = 0; _ < n; ++_)                                                \
-      cout << x[_] << " ";                                                     \
-    cout << endl;                                                              \
+    for (int _ = 1; _ <= n; ++_)                                                \
+      cerr << x[_] << " ";                                                     \
+    cerr << endl;                                                              \
   }
 #define debugarr2d(x, n, m)                                                    \
   {                                                                            \
-    for (int __ = 0; __ < n; ++__)                                             \
+    for (int __ = 1; __ <= n; ++__)                                             \
       debugarr(x[__], m);                                                      \
-    cout << endl;                                                              \
+    cerr << endl;                                                              \
   }
 #define debugvi(x)                                                             \
   {                                                                            \
     for (int _ = 0; _ < x.size(); ++_)                                         \
-      cout << x[_] << " ";                                                     \
-    cout << endl;                                                              \
+      cerr << x[_] << " ";                                                     \
+    cerr << endl;                                                              \
   }
 
 using namespace std;
 
 int main() {
-#ifdef LOCAL
-  freopen("data.inp", "r", stdin);
-#endif
 
   return 0;
 }

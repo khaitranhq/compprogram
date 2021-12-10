@@ -2,7 +2,6 @@
 
 import subprocess
 import glob
-from tabulate import tabulate
 
 PROBLEM = 'C'
 
@@ -10,9 +9,11 @@ list_input_files = glob.glob(f"{PROBLEM}/test/*.inp")
 
 for index, input_file in enumerate(list_input_files):
 
-    command = f"g++ -DLOCAL {PROBLEM}/data.cpp -o {PROBLEM}/data.exe && {PROBLEM}/data.exe {input_file}"
+    command = f"g++ {PROBLEM}/data.cpp -o {PROBLEM}/data.exe && {PROBLEM}/data.exe < {index}.inp"
 
     result = subprocess.getoutput(command)
 
-    print(f"Output of Testcase ${index}:\n")
-    print(tabulate(['abc', result], headers=['Input', 'Output']))
+    if result == open(f"{PROBLEM}/test/{index}.ans").read():
+        print(f"Testcase ${index}: Success\n")
+    else:
+        print(f"Testcase ${index}: Failed\n")
