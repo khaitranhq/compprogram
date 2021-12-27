@@ -1,8 +1,8 @@
 #!/bin/bash
 
 CODEFORCES_DIR=`pwd`
-CONTEST_NAME="tmp"
-PROBLEMS=(A B C D1 D2)
+CONTEST_NAME="ECR/ECR120"
+PROBLEMS=(A B C D E)
 
 if [ -d "$CONTEST_NAME" ]; then
   echo "Direction existed"

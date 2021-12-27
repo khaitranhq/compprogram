@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CODEFORCES_DIR=`pwd`
-CONTEST_NAME="South"
+CONTEST_NAME="Central"
 PROBLEMS=(A B C D E F G H I J K L M N O)
 
 if [ -d "$CONTEST_NAME" ]; then

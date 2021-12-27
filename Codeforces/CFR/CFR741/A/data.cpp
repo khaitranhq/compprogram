@@ -37,6 +37,8 @@ int main() {
 
     if (mid < l) cout << r % l << endl;
     else cout << r % mid << endl;
+
+    int a = "d";
   }
   return 0;
 }
