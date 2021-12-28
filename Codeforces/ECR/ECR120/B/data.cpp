@@ -22,7 +22,22 @@
 
 using namespace std;
 
+const int MAX = 2e5 + 5;
+int q[MAX];
+int p[MAX];
+
+vector<int> getQ(bool val, vector<int> x) {
+  for (int i = 0 + )
+}
+
 int main() {
 
+  int T;
+  cin >> T;
+  while(T--) {
+    int n;
+    cin >> n;
+    for (int i= 1; i <= n; ++i) cin >> p[i];
+  }
   return 0;
 }
