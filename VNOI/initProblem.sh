@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PROBLEM_NAME="EducationalSegmentTree/ITEZ2"
+PROBLEM_NAME="EducationalSegmentTree/ITLAZY"
 
 if [ -d "$PROBLEM_NAME" ]; then
   echo "Direction existed"
