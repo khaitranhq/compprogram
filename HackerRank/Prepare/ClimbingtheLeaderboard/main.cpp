@@ -16,10 +16,10 @@ vector<string> split(const string &);
  */
 
 vector<int> climbingLeaderboard(vector<int> ranked, vector<int> player) {
-  sort(ranked.begin(), ranked.end());
+  sort(ranked.begin(), ranked.end(), greater<int>());
   vector<int> leaderboardRankNumber;
   leaderboardRankNumber.push_back(1);
-  for (int i = 2; i < ranked.size(); ++i) {
+  for (int i = 1; i < ranked.size(); ++i) {
     int lastRankNumber = leaderboardRankNumber.back();
     if (ranked[i] == ranked[i - 1])
       leaderboardRankNumber.push_back(lastRankNumber);
@@ -29,18 +29,23 @@ vector<int> climbingLeaderboard(vector<int> ranked, vector<int> player) {
 
   vector<int> leaderboardPlayerNumber;
   for (int i = 0; i < player.size(); ++i) {
-    int left = 1, right = ranked.size(), answer;
+    int left = 0, right = ranked.size() - 1, answer = -1;
     while (left <= right) {
       int mid = (left + right) >> 1;
-      if (ranked[mid - 1] <= player[i]) {
+
+      if (ranked[mid] <= player[i]) {
         answer = mid;
         right = mid - 1;
       } else
         left = mid + 1;
     }
 
-    leaderboardRankNumber.push_back(leaderboardRankNumber[answer - 1]);
+    if (answer == -1)
+      leaderboardPlayerNumber.push_back(leaderboardRankNumber.back() + 1);
+    else
+      leaderboardPlayerNumber.push_back(leaderboardRankNumber[answer]);
   }
+
   return leaderboardPlayerNumber;
 }
 
