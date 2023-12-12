@@ -23,26 +23,98 @@
 using namespace std;
 
 typedef vector<bool> vb;
-const int MAX_DIGITS = 31;
-const int MAX_NODES = 1e6 + 5;
 
-bool bit(int x, int index) {return (x >> index) & 1;}
+const int NUMBER_NODES = 1e7;
+
+bool getBit(int x, int index) { return (x >> index) & 1; }
 
 struct Trie {
-  vector<int> next
+  struct Node {
+    int child[2];
+    int numberLastNode; // Number of numbers use this node as the last node
+    int count;          // Numbers of number use this node
+  } nodes[NUMBER_NODES];
 
-  void Add() {}
-  void Remove(){}
+  int totalNumberNodes;
+  Trie() : totalNumberNodes(0) {
+    nodes[0].child[0] = nodes[0].child[1] = -1;
+    nodes[0].numberLastNode = nodes[0].count = 0;
+  }
 
+  void add(int x) {
+    int nodeIndex = 0;
+    for (int i = 30; i >= 0; --i) {
+      int bit = getBit(x, i);
+      if (nodes[nodeIndex].child[bit] == -1) { // Need create a new node
+        totalNumberNodes++;
+        nodes[totalNumberNodes].child[0] = nodes[totalNumberNodes].child[1] =
+            -1;
+        nodes[totalNumberNodes].numberLastNode = nodes[totalNumberNodes].count =
+            0;
+
+        nodes[nodeIndex].child[bit] = totalNumberNodes;
+      }
+
+      nodeIndex = nodes[nodeIndex].child[bit];
+      nodes[nodeIndex].count++;
+    }
+
+    nodes[nodeIndex].numberLastNode++;
+  }
+
+  void remove(int x) {
+    int nodeIndex = 0;
+    int previousNodeIndex = 0;
+    for (int i = 30; i >= 0; --i) {
+      int bit = getBit(x, i);
+
+      previousNodeIndex = nodeIndex;
+      nodeIndex = nodes[nodeIndex].child[bit];
+      nodes[nodeIndex].count--;
+
+      if (nodes[nodeIndex].count == 0) {
+        nodes[previousNodeIndex].child[getBit(x, i)] = -1;
+      }
+    }
+  }
+
+  int findMaxXor(int x) {
+    int nodeIndex = 0;
+    int maxXor = 0;
+
+    // // DEBUG
+    //   for (int i = 0; i <= 40; ++i) {
+    //     printf("%d - %d %d\n", i, nodes[i].child[0], nodes[i].child[1]);
+    //   }
+
+    for (int i = 30; i >= 0; --i) {
+      int bit = getBit(x, i);
+      // if (nodes[nodeIndex].child[0] == -1 && nodes[nodeIndex].child[1] == -1)
+      //   return x;
+
+      if (nodes[nodeIndex].child[bit ^ 1] != -1) {
+        maxXor += (1 << i);
+        nodeIndex = nodes[nodeIndex].child[bit ^ 1];
+      } else {
+        nodeIndex = nodes[nodeIndex].child[bit];
+      }
+
+      // // DEBUG
+      //    printf("%d %d %d\n", i, bit, maxXor);
+    }
+
+    return maxXor;
+  }
 } trie;
 
 int main() {
 #ifdef LOCAL
-  freope("data.inp", "r", stdin);
+  freopen("data.inp", "r", stdin);
 #endif
 
   int q;
   cin >> q;
+  trie.add(0);
   while (q--) {
     char type;
     int x;
@@ -54,20 +126,24 @@ int main() {
 
     switch (type) {
     case '+':
-      trie.Add(x);
+      trie.add(x);
       break;
     case '-':
-      trie.Remove(x);
+      trie.remove(x);
       break;
     case '?':
-      for (int j = 0; j < 2; ++j) {
-        for (int i = 0; i < 8; ++i)
-          cout << trie.noNumberHasDigit[i][j] << " ";
-        cout << endl;
-      }
-      cout << trie.Query(x) << endl;
+      cout << trie.findMaxXor(x) << endl;
       break;
     }
   }
+
+  // for (int i = 0; i <= 31; ++i) {
+  //   cout << "Child: " << trie.nodes[i].child[0] << " " <<
+  //   trie.nodes[i].child[1]
+  //        << endl;
+  //
+  //   cout << "Count: " << trie.nodes[i].count;
+  //   cout << endl << endl;
+  // }
   return 0;
 }
