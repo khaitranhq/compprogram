@@ -55,7 +55,7 @@ void solve() {
 
   int lastValueIndex = 0;
   for (int i = 1; i <= n; ++i)
-    if (!lastValueIndex || dp[a[lastValueIndex]] < dp[a[i]])
+    if (!lastValueIndex || dp[a[lastValueIndex]] <= dp[a[i]])
       lastValueIndex = i;
 
   cout << dp[a[lastValueIndex]] + 1 << endl;
