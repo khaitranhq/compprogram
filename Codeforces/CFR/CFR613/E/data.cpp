@@ -1,125 +1,103 @@
-#include <bits/stdc++.h>
-
-#define FOR(i, a, b) for(int i = a ; i <= b ; ++i)
-#define FOD(i, a, b) for(int i = a ; i >= b ; --i)
-#define REP(i, a, b) for(int i = a ; i < b ; ++i)
-#define FRSZ(i, a) for(int i = 0 ; i < a.size() ; ++i)
-#define FDSZ(i, a) for(int i = a.size() – 1 ; i >= 0 ; --i)
+#include <algorithm>
+#include <cstdio>
+#include <cstring>
+#include <iostream>
+#include <unordered_map>
 
 #define debug(x) cout << #x << " = " << x << endl;
-#define debugarr2d(x, n, m) {FOR(_, 1, (n)) {FOR(__, 1, (m)) cout << x[_][__] << " "; cout << endl;} cout << endl;}
-#define debugarr(x, n) {FOR(_, 1, (n)) cout << x[_] << " " ; cout << endl;}
-#define debugvi(x) {FRSZ(_, x) cout << x[_] << " " ; cout << endl;}
+#define debugarr2d(x, n, m)                                                    \
+  {                                                                            \
+    FOR(_, 1, (n)) {                                                           \
+      FOR(__, 1, (m)) cout << x[_][__] << " ";                                 \
+      cout << endl;                                                            \
+    }                                                                          \
+    cout << endl;                                                              \
+  }
+#define debugarr(x, n)                                                         \
+  {                                                                            \
+    FOR(_, 1, (n)) cout << x[_] << " ";                                        \
+    cout << endl;                                                              \
+  }
+#define debugvi(x)                                                             \
+  {                                                                            \
+    FRSZ(_, x) cout << x[_] << " ";                                            \
+    cout << endl;                                                              \
+  }
 
-#define fi first
-#define se second
+#define left first
+#define right second
 #define pb push_back
 
-#define left asdfasdfadf
-#define right asdfadvas
 using namespace std;
 
-typedef int64_t ll;
-typedef pair<ll, ll> ii;
-typedef pair<ll, ii> III;
-const int MAX = 2e5 + 5;
+typedef pair<int, int> ii;
+const int MAX_NUMBER_ARRAY_ELEMENTS = 2e5 + 5;
+const int MIN_VALUE = -1e9;
+
+ii a[MAX_NUMBER_ARRAY_ELEMENTS];
 int n;
-ll f[MAX], sum[MAX];
-ii a[MAX];
+unordered_map<int, int> dpResult[MAX_NUMBER_ARRAY_ELEMENTS][5];
 
-struct FenwickTree{
-    int Tree[2 * MAX];
+void readInput() {
+  memset(a, 0, sizeof(a));
+  cin >> n;
 
-    void init(){
-        memset(Tree, 0, sizeof(Tree));
-    }
-
-    void update(int u, int x){
-        for(; u <= 2 * n ; u += u & -u)
-            Tree[u] += x;
-    }
-
-    int query(int u){
-        int ans = 0;
-        for(; u ; u -= u & -u)
-            ans += Tree[u];
-        return ans;
-    }
-} BIT;
-
-void numberCompression(){
-    vector<III> values;
-    FOR(i, 1, n){
-        values.push_back(III(a[i].fi, ii(i, 0)));
-        values.push_back(III(a[i].se, ii(i, 1)));
-    }
-    sort(values.begin(), values.end());
-
-    int cnt = 1;
-    FRSZ(i, values){
-        if (i && values[i].fi != values[i - 1].fi) ++cnt;
-        III element = values[i];
-        if (element.se.se)
-            a[element.se.fi].se = cnt;
-        else
-            a[element.se.fi].fi = cnt;
-    }
+  for (int i = 1; i <= n; ++i) {
+    dpResult[i][0].clear();
+    dpResult[i][1].clear();
+    cin >> a[i].left >> a[i].right;
+  }
 }
 
-int main(){
-    #ifndef ONLINE_JUDGE
-    freopen("data.inp", "r", stdin);
-    freopen("data.out", "w", stdout);
-    #endif
+/*
+ * Dynamic Programming with Memorization
+ * Maximum union of segments from i to n with the maxEndpointPos
+ *
+ * @param i: index in array a
+ * @param maxEndpointPos: max coordiante of the end points of considered
+ * segements so far
+ * @param isDeleted: deleted a segment or not yet
+ */
+int dp(int i, int maxEndpointPos, bool isDeleted) {
+  if (i == n) {
+    if (!isDeleted)
+      return MIN_VALUE;
+    return 1;
+  }
 
-    int T;
-    cin >> T;
-    while(T--){
-        cin >> n;
-        FOR(i, 1, n)
-            cin >> a[i].fi >> a[i].se;
-        numberCompression();
-        sort(a + 1, a + n + 1);
+  // If this stated was calculated
+  if (dpResult[i][isDeleted].count(maxEndpointPos))
+    return dpResult[i][isDeleted][maxEndpointPos];
 
-        memset(sum, 0, sizeof(sum));
-        FOR(i, 1, n) {
-            int left = i + 1, right = n, ans = i;
-            while(left <= right){
-                int mid = (left + right) >> 1;
-                if (a[mid].fi <= a[i].se){
-                    ans = mid;
-                    left = mid + 1;
-                } else right = mid - 1;
-            }
+  int bonus = (a[i + 1].left > maxEndpointPos);
 
-            f[i] += ans - i;
-            sum[i + 1] += 1;
-            sum[ans + 1] -= 1;
-        }
+  // If isDeleted = 1 => only solve child state with isDeleted = 1
+  int ans = dp(i + 1, max(maxEndpointPos, a[i + 1].right), isDeleted) + bonus;
 
-        sum[0] = 0;
-        FOR(i, 1, n)
-            sum[i] = sum[i - 1] + sum[i];
+  // If isDeleted = 0 => isDeleted of child state can be 0 or 1
+  if (!isDeleted) {
+    ans = max(ans, dp(i + 1, maxEndpointPos, 1));
+  }
+  dpResult[i][isDeleted][maxEndpointPos] = ans;
+  printf("%d %d %d => %d\n", i, maxEndpointPos, isDeleted, ans);
+  return ans;
+}
 
-        FOR(i, 1, n)
-            f[i] += sum[i];
-        
-        int indexMax = -1;
-        FOR(i, 1, n)
-            if (indexMax == -1 || f[indexMax] < f[i])
-                indexMax = i;
+void solve() {
+  sort(a + 1, a + n + 1);
+  dp(1, a[1].right, 0);
+}
 
-        int res = 0;
-        a[0] = ii(0, 0);
-        FOR(i, 1, n)  {
-            if (i == indexMax) continue;
-            if (i - 1 == indexMax){
-                if (a[i].fi > a[i - 2].se) ++res;
-            }
-            else 
-                if (a[i].fi > a[i - 1].se) ++res;
-        }
-        cout << res << endl;;
-    }
-    return 0;
+int main() {
+#ifdef LOCAL
+  freopen("input.2", "r", stdin);
+#endif
+
+  int T;
+  cin >> T;
+  while (T--) {
+    readInput();
+    solve();
+  }
+  return 0;
 }
