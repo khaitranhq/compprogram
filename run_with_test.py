@@ -3,7 +3,7 @@
 import subprocess
 import glob
 
-PROBLEM = 'Leetcode/longest-substring-without-repeating-characters'
+PROBLEM = 'Leetcode/longest-palindromic-substring'
 
 list_input_files = glob.glob(f"{PROBLEM}/test/*.inp")
 
