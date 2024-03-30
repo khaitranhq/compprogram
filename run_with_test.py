@@ -3,7 +3,7 @@
 import subprocess
 import glob
 
-PROBLEM = 'Leetcode/largest-palindromic-number'
+PROBLEM = 'Leetcode/longest-substring-without-repeating-characters'
 
 list_input_files = glob.glob(f"{PROBLEM}/test/*.inp")
 
@@ -15,7 +15,7 @@ for index, input_file in enumerate(list_input_files):
                 check=True)
 
             input_data = input_file.read().strip()
-            print(input_data)
+            # print(input_data)
             result = subprocess.run([f"./{PROBLEM}/main.exe"],
                                     input=input_data,
                                     text=True,
@@ -33,4 +33,4 @@ for index, input_file in enumerate(list_input_files):
         print("File not found.")
     except subprocess.CalledProcessError as e:
         print("Error:", e)
-        print("Subprocess output:", e.output)
+        # print("Subprocess output:", e.output)
