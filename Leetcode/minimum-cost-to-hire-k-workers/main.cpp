@@ -44,6 +44,7 @@ public:
 };
 
 int main() {
+  // freopen("test/2.inp", "r", stdin);
   int n, k;
   cin >> n >> k;
 
