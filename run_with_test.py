@@ -3,7 +3,7 @@
 import subprocess
 import glob
 
-PROBLEM = 'Leetcode/zigzag-conversion'
+PROBLEM = 'Leetcode/minimum-cost-to-hire-k-workers'
 
 list_input_files = glob.glob(f"{PROBLEM}/test/*.inp")
 
