@@ -3,7 +3,7 @@
 import subprocess
 import glob
 
-PROBLEM = 'Leetcode/minimum-cost-to-hire-k-workers'
+PROBLEM = 'Leetcode/largest-local-values-in-a-matrix'
 
 list_input_files = glob.glob(f"{PROBLEM}/test/*.inp")
 
@@ -21,7 +21,7 @@ for index, input_file in enumerate(list_input_files):
                                     text=True,
                                     capture_output=True,
                                     check=True)
-            print(result.stdout)
+            print(result.stdout.strip())
 
             if result.stdout.strip() == open(f"{PROBLEM}/test/{index}.ans").read().strip():
                 print(f"Testcase ${index}: Success\n")
