@@ -2,6 +2,9 @@
 #include <iostream>
 using namespace std;
 
+const int MAXN = 1e5 + 5;
+const int MOD_BASE = 1e9 + 7;
+
 class Solution {
 public:
   int checkRecord(int n) {
@@ -18,8 +21,6 @@ public:
   }
 
 private:
-  const int MAXN = 1e5 + 5;
-  const int MOD_BASE = 1e9 + 7;
   // Number of possible attendance records
   // [i][j][a][l]
   // i: length of attendance records
