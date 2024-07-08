@@ -9,13 +9,10 @@ using namespace std;
 class Solution {
 public:
   bool isMatch(string s, string p) {
-    // cout << s << " " << p << endl;
-
     if (dp.count({s, p}))
       return dp[{s, p}];
 
     if (p.size() == 0) {
-      // cout << "LL " << s.size() << endl;
       return (s.size() == 0);
     }
 
@@ -51,9 +48,6 @@ public:
       }
     }
 
-    // cout << s << " " << p << endl;
-    // cout << ans << endl;
-    // cout << endl;
     dp[{s, p}] = ans;
     return ans;
   }
@@ -67,80 +61,80 @@ int main() {
 
   Solution solution;
 
-  // // .
-  // cout << "case 1" << endl;
-  // s = "aab";
-  // p = "a.b";
-  // assert(solution.isMatch(s, p));
-  //
-  // // character
-  // cout << "case 2" << endl;
-  // s = "aab";
-  // p = "aab";
-  // assert(solution.isMatch(s, p));
-  //
-  // // character *
-  // cout << "case 3" << endl;
-  // s = "aab";
-  // p = "a*b";
-  // assert(solution.isMatch(s, p));
-  //
-  // cout << "case 4" << endl;
-  // s = "aaaaab";
-  // p = "a*ab";
-  // assert(solution.isMatch(s, p));
-  //
-  // cout << "case 5" << endl;
-  // s = "aaaaab";
-  // p = "a*cb";
-  // assert(!solution.isMatch(s, p));
-  //
-  // cout << "case 6" << endl;
-  // s = "aaaaab";
-  // p = "a*aaaaab";
-  // assert(solution.isMatch(s, p));
-  //
-  // // .*
-  // cout << "case 7" << endl;
-  // s = "aab";
-  // p = "a.*";
-  // assert(solution.isMatch(s, p));
-  //
-  // // Misc
-  // cout << "case 8" << endl;
-  // s = "aabcccccd";
-  // p = "a.*c*d";
-  // assert(solution.isMatch(s, p));
-  //
-  // cout << "case 9" << endl;
-  // s = "aabcccccd";
-  // p = "a.*d";
-  // assert(solution.isMatch(s, p));
-  //
-  // cout << "case 10" << endl;
-  // s = "aabcccccd";
-  // p = "a*c";
-  // assert(!solution.isMatch(s, p));
-  //
-  // cout << "case 11" << endl;
-  // s = "aa";
-  // p = "a*";
-  // assert(solution.isMatch(s, p));
-  //
-  // cout << "case 12" << endl;
-  // s = "aab";
-  // p = "c*a*b";
-  // assert(solution.isMatch(s, p));
-  //
-  // cout << "case 13" << endl;
-  // s = "mississippi";
-  // p = "mis*is*p*.";
-  // assert(!solution.isMatch(s, p));
-  //
-  // cout << "case 14" << endl;
-  // s = "bbab";
-  // p = "b*a*";
-  // assert(!solution.isMatch(s, p));
+  // .
+  cout << "case 1" << endl;
+  s = "aab";
+  p = "a.b";
+  assert(solution.isMatch(s, p));
+
+  // character
+  cout << "case 2" << endl;
+  s = "aab";
+  p = "aab";
+  assert(solution.isMatch(s, p));
+
+  // character *
+  cout << "case 3" << endl;
+  s = "aab";
+  p = "a*b";
+  assert(solution.isMatch(s, p));
+
+  cout << "case 4" << endl;
+  s = "aaaaab";
+  p = "a*ab";
+  assert(solution.isMatch(s, p));
+
+  cout << "case 5" << endl;
+  s = "aaaaab";
+  p = "a*cb";
+  assert(!solution.isMatch(s, p));
+
+  cout << "case 6" << endl;
+  s = "aaaaab";
+  p = "a*aaaaab";
+  assert(solution.isMatch(s, p));
+
+  // .*
+  cout << "case 7" << endl;
+  s = "aab";
+  p = "a.*";
+  assert(solution.isMatch(s, p));
+
+  // Misc
+  cout << "case 8" << endl;
+  s = "aabcccccd";
+  p = "a.*c*d";
+  assert(solution.isMatch(s, p));
+
+  cout << "case 9" << endl;
+  s = "aabcccccd";
+  p = "a.*d";
+  assert(solution.isMatch(s, p));
+
+  cout << "case 10" << endl;
+  s = "aabcccccd";
+  p = "a*c";
+  assert(!solution.isMatch(s, p));
+
+  cout << "case 11" << endl;
+  s = "aa";
+  p = "a*";
+  assert(solution.isMatch(s, p));
+
+  cout << "case 12" << endl;
+  s = "aab";
+  p = "c*a*b";
+  assert(solution.isMatch(s, p));
+
+  cout << "case 13" << endl;
+  s = "mississippi";
+  p = "mis*is*p*.";
+  assert(!solution.isMatch(s, p));
+
+  cout << "case 14" << endl;
+  s = "bbab";
+  p = "b*a*";
+  assert(!solution.isMatch(s, p));
 
   cout << "case 15" << endl;
   s = "b";
