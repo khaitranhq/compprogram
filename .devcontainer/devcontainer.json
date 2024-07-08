@@ -1,5 +1,3 @@
 {
-  "build": {
-    "dockerfile": "Dockerfile"
-  }
+  "image": "ghcr.io/khaitranhq/devcontainer:cpp-1.2.1-debian12-41"
 }
