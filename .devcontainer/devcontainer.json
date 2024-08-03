@@ -1,5 +1,5 @@
 {
-  "image": "ghcr.io/khaitranhq/devcontainer:cpp-1.2.1-debian12-41",
+  "image": "ghcr.io/khaitranhq/devcontainer:cpp-1-debian12",
   "mounts": [
     "type=bind,source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,readonly"
   ]
