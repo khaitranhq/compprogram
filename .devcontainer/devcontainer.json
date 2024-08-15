@@ -1,5 +1,6 @@
 {
   "image": "ghcr.io/khaitranhq/devcontainer:cpp-1-debian12",
+  "runArgs": ["--name", "compprogram-devcontainer"],
   "mounts": [
     "type=bind,source=${localEnv:HOME}/.ssh,target=/home/vscode/.ssh,readonly"
   ]
