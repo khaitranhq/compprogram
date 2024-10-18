@@ -19,42 +19,33 @@ private:
   map<pair<int, int>, int> f;
 
   bool isMatchRecursive(int startSIndex, int startPIndex) {
-    debug(startSIndex);
-    debug(startPIndex);
     // Anchor case
     if (pattern == "*")
       return true;
 
-    if (str.size() == startSIndex && pattern.size() == startPIndex)
-      return true;
+    if (pattern.size() == startPIndex)
+      return str.size() == startSIndex;
 
     if (f.count({startSIndex, startPIndex}))
       return f[{startSIndex, startPIndex}];
 
-    if (str.size() - 1 == startSIndex && pattern.size() - 1 == startPIndex) {
-      f[{startSIndex, startPIndex}] =
-          ((str[startPIndex] == pattern[startPIndex]) ||
-           (pattern[startPIndex] == '?'));
-      return f[{startSIndex, startPIndex}];
-    }
-
     // Recursive case
-    if (pattern[0] == '?') {
+    if (pattern[startPIndex] == '?') {
       f[{startSIndex, startPIndex}] =
           startSIndex < str.size() &&
           isMatchRecursive(startSIndex + 1, startPIndex + 1);
       return f[{startSIndex, startPIndex}];
     }
 
-    if (pattern[0] == '*') {
+    if (pattern[startPIndex] == '*') {
       bool ans = isMatchRecursive(startSIndex, startPIndex + 1);
-      for (int i = 0; i < str.size() && !ans; ++i)
-        ans |= isMatchRecursive(startSIndex + i + 1, startPIndex + 1);
+      for (int i = startSIndex; i < str.size() && !ans; ++i)
+        ans |= isMatchRecursive(i + 1, startPIndex + 1);
       f[{startSIndex, startPIndex}] = ans;
       return ans;
     }
 
-    bool ans = (str[0] == pattern[0]);
+    bool ans = (str[startSIndex] == pattern[startPIndex]);
     if (!ans) {
       f[{startSIndex, startPIndex}] = false;
       return false;
@@ -91,15 +82,32 @@ void expect(string test, string s, string p, bool expected) {
 int main(int argc, char *argv[]) {
   string s, p;
 
-  // s = "baabbabababaabbabababbaabbbbaaabaaabbbbaaaaaabbbbaaabaaabbbbbabaabbbbbbb"
-  //     "babbbabbabbbbabbbbabbbbbbabababbaaaabbbbaabaaababbbabaaaabaabbbabbaabbab"
-  //     "bbbabaababbbbbbbabbaaaabaaabbaaabaaaaababbbaaaabbbbbabbabb";
-  // p = "ba*ba*bb*a********abaa*bb**abb**b***ab**b*b*babb***a*bb*aaabb*****b*"
-  //     "aabb**aa**b*a***b*bb*b*bb*a*bbbbb**";
-  // expect("Test 1", s, p, true);
+  s =
+  "baabbabababaabbabababbaabbbbaaabaaabbbbaaaaaabbbbaaabaaabbbbbabaabbbbbbb"
+      "babbbabbabbbbabbbbabbbbbbabababbaaaabbbbaabaaababbbabaaaabaabbbabbaabbab"
+      "bbbabaababbbbbbbabbaaaabaaabbaaabaaaaababbbaaaabbbbbabbabb";
+  p = "ba*ba*bb*a********abaa*bb**abb**b***ab**b*b*babb***a*bb*aaabb*****b*"
+      "aabb**aa**b*a***b*bb*b*bb*a*bbbbb**";
+  expect("Test 1", s, p, true);
 
   s = "aa";
   p = "a";
   expect("Test 2", s, p, false);
+
+  s = "aa";
+  p = "*";
+  expect("Test 3", s, p, true);
+
+  s = "cb";
+  p = "?a";
+  expect("Test 4", s, p, false);
+
+  s = "adceb";
+  p = "*a*b";
+  expect("Test 5", s, p, true);
+
+  s = "acdcb";
+  p = "a*c?b";
+  expect("Test 6", s, p, false);
   return 0;
 }
