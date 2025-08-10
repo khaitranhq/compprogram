@@ -3,6 +3,7 @@ data.exe
 data.out
 data.inp
 main.exe
+*.exe
 
 .vscode
 target

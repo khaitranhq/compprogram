@@ -63,6 +63,8 @@ int main() {
         cin >> box;
         openableBoxes[i].push_back(box);
       }
+      // Sort adjacency list for lexicographic ordering
+      sort(openableBoxes[i].begin(), openableBoxes[i].end());
     }
 
     // Find path from box 1 to box n
@@ -71,11 +73,12 @@ int main() {
       cout << "-1" << endl;
     } else {
       cout << pathToBox.size() - 1 << endl; // Number of steps (edges)
-      for (int i = 0; i < pathToBox.size() - 1; ++i) {
+      for (size_t i = 0; i < pathToBox.size() - 1; ++i) {
         cout << pathToBox[i] << " ";
       }
       cout << endl;
     }
+    cout << endl; // Blank line after each test case as required by SPOJ
   }
   return 0;
 }
